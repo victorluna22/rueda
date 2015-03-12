@@ -1,12 +1,14 @@
 from django.conf.urls import patterns, include, url
 from app.views.person import PersonListView, PersonCreateView, PersonUpdateView, PersonDeleteView, person_search
 from app.views.log import LogListView
+from django.views.generic.base import RedirectView
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
+    url(r'^$', RedirectView.as_view(url='/pessoa/', permanent=False), name='home'),
     url(r'^pessoa/$', PersonListView.as_view(), name='person_list'),
     url(r'^pessoa/cadastrar/$', PersonCreateView.as_view(), name='person_create'),
     url(r'^pessoa/editar/(?P<pk>\d+)/$', PersonUpdateView.as_view(), name='person_update'),
