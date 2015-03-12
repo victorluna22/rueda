@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load person_tags %}
+
+{% block content %}
+
+<div class="ui-widget">
+	<form class="form-inline" method="GET" action=".">
+	  <div class="form-group">
+	    <div class="input-group">
+	      <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+	      <input type="text" name="q" class="form-control" id="names" placeholder="Busca" style="width:350px">
+	    </div>
+	  </div>
+	</form>
+</div>
+<br>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Texto</th>
+			<th>Ação</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for log in object_list %}
+			<tr>
+				<td>{{ log.text }}</td>
+				<td>{{ log.get_type }}</td>
+			</tr>
+		{% empty %}
+			<tr><td colspan="2">Não existem registros de log até o momento.</td></tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% if is_paginated %}
+    <nav>
+	  <ul class="pagination">
+	    {% if page_obj.has_previous %}
+	    	<li>
+	      		<a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+	        		<span aria-hidden="true">&laquo;</span>
+	      		</a>
+	    	</li>
+	    {% endif %}
+	    {% for i in pages_range %}
+	    	<li {% if page_obj.number == i %}class="active"{% endif %}><a href="?page={{i}}">{{ i }}</a></li>
+	    {% endfor %}
+	    {% if page_obj.has_next %}
+		    <li>
+		      <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+	    {% endif %}
+	  </ul>
+	</nav>
+{% endif %}
+
+{% endblock content %}

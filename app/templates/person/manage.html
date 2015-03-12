@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST" action="." class="form-horizontal">
+	{% csrf_token %}
+
+	{% for field in form %}
+	<div class="form-group">
+    	<label>{{ field.label }}</label>
+    	<input type="text" name="{{ field.name }}" value="{{ field.value|default:'' }}" class="form-control">
+  	</div>
+  	{% endfor %}
+	<input type="submit" value="Submeter" class="btn btn-default">
+
+	{% if 'cadastrar' not in request.path %}
+		<a href="{% url 'person_delete' person.id %}" class="btn btn-danger" role="button">excluir</a>
+	{% endif %}
+</form>
+{% endblock content %}
